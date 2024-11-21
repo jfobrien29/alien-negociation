@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import { ResetChatButton } from '@/components/reset';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function ChatPage() {
   const messages = useQuery(api.messages.getAll);
@@ -42,19 +43,28 @@ export default function ChatPage() {
         <Card className="w-full max-w-2xl">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-center">
-              <div>{pathname === '/alien' ? 'You are Alien' : 'You are Human'}</div>
+              You are <span className="bg-blue-100 px-2 py-1 rounded">Human</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[400px] w-full pr-4">
               {messages?.map((message) => (
-                <div key={message._id} className="mb-4 p-3 bg-white rounded-lg shadow flex gap-2">
+                <div
+                  key={message._id}
+                  className="mb-4 p-3 bg-white rounded-lg shadow flex gap-2 border"
+                >
                   <div
                     className={`px-2 py-1 rounded text-xs ${message.role === 'human' ? 'bg-blue-100' : 'bg-green-100'}`}
                   >
                     {message.role === 'human' ? 'Humans' : 'Aliens'}
                   </div>
-                  <div>{message.humanReadableContent}</div>
+                  <div>
+                    {message.isLoading ? (
+                      <Skeleton className="h-4 w-3/4" />
+                    ) : (
+                      message.humanReadableContent
+                    )}
+                  </div>
                 </div>
               ))}
             </ScrollArea>

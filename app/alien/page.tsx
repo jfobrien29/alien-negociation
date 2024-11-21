@@ -42,13 +42,16 @@ export default function AlienPage() {
         <Card className="w-full max-w-2xl">
           <CardHeader>
             <CardTitle className="text-2xl font-bold text-center">
-              <div>{pathname === '/alien' ? 'You are Alien' : 'You are Human'}</div>
+              You are <span className="bg-green-100 px-2 py-1 rounded">Alien</span>
             </CardTitle>
           </CardHeader>
           <CardContent>
             <ScrollArea className="h-[400px] w-full pr-4">
               {messages?.map((message) => (
-                <div key={message._id} className="mb-4 p-3 bg-white rounded-lg shadow flex gap-2">
+                <div
+                  key={message._id}
+                  className="mb-4 p-3 bg-white rounded-lg shadow flex gap-2 border"
+                >
                   <div
                     className={`px-2 py-1 rounded text-xs ${message.role === 'human' ? 'bg-blue-100' : 'bg-green-100'}`}
                   >

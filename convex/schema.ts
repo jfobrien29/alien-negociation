@@ -5,6 +5,7 @@ export default defineSchema({
   messages: defineTable({
     humanReadableContent: v.string(),
     alienReadableContent: v.string(),
+    isLoading: v.boolean(),
     role: v.string(),
   }),
 });

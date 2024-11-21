@@ -18,10 +18,12 @@ export function ResetChatButton() {
   const resetMessages = useMutation(api.messages.reset);
 
   return (
-    <div className="fixed top-4 right-4 z-50">
+    <div className="fixed md:top-4 md:right-4 top-2 right-2 z-50">
       <AlertDialog>
         <AlertDialogTrigger asChild>
-          <Button variant="outline">Reset Chat</Button>
+          <Button variant="outline" className="md:text-base text-sm">
+            Reset Chat
+          </Button>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>

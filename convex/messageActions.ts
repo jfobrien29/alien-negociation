@@ -13,12 +13,12 @@ export const alienifyMessage = action({
   args: { content: v.string(), id: v.id('messages') },
   handler: async (ctx, args) => {
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',
+      model: 'gpt-4o',
       messages: [
         {
           role: 'system',
           content:
-            'You are an aggressive alien. Rewrite the given message in your voice, making it sound more alien and hostile. Keep the same exact meaning but add alien references and aggressive tones. Cold, sterile, and hostile.',
+            'You are an alien. Rewrite the given message in your voice, making it sound more alien and hostile. Keep the same exact meaning of the original message. Be cold, sterile, and hostile. Be brief.',
         },
         {
           role: 'user',

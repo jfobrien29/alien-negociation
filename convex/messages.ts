@@ -1,20 +1,39 @@
 import { v } from 'convex/values';
-import { mutation, internalMutation, query } from './_generated/server';
+import { mutation, query } from './_generated/server';
 
-export const lastChat = query({
+export const getAll = query({
   args: {},
-  handler: async (ctx) => {
-    // Grab the single most recent messages.
-    return await ctx.db.query('chats').order('desc').first();
+  handler: async (ctx, args) => {
+    return await ctx.db.query('messages').collect();
   },
 });
 
-export const getChatMessages = query({
-  args: { chatId: v.id('chats') },
+export const reset = mutation({
+  args: {},
+  handler: async (ctx) => {
+    const messages = await ctx.db.query('messages').collect();
+    await Promise.all(messages.map((message) => ctx.db.delete(message._id)));
+  },
+});
+
+export const writeHumanMessage = mutation({
+  args: { content: v.string() },
   handler: async (ctx, args) => {
-    return await ctx.db
-      .query('messages')
-      .withIndex('by_chat', (q) => q.eq('chatId', args.chatId))
-      .collect();
+    await ctx.db.insert('messages', {
+      humanReadableContent: args.content,
+      alienReadableContent: args.content,
+      role: 'human',
+    });
+  },
+});
+
+export const writeAlienMessage = mutation({
+  args: { content: v.string() },
+  handler: async (ctx, args) => {
+    await ctx.db.insert('messages', {
+      humanReadableContent: args.content,
+      alienReadableContent: args.content,
+      role: 'alien',
+    });
   },
 });

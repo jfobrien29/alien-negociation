@@ -16,10 +16,10 @@ export default function Home() {
           </h1>
           <div className="flex gap-4 mt-8 animate-[fade-in-down_0.4s_ease-out_forwards] opacity-0 delay-300">
             <Link href="/alien">
-              <Button>Get Started</Button>
+              <Button>Play as Alien</Button>
             </Link>
             <Link href="/human">
-              <Button variant="outline">Get Started</Button>
+              <Button variant="outline">Play as Human</Button>
             </Link>
           </div>
         </div>
